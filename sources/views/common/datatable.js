@@ -1,10 +1,10 @@
 import {JetView} from "webix-jet";
 
 export default class Datatable extends JetView {
-	constructor(app, name, data, columns) {
+	constructor(app, name, data, fields) {
 		super(app, name);
 		this.data = data;
-		this.columns = columns;
+		this.fields = fields;
 	}
 
 	config() {
@@ -13,7 +13,7 @@ export default class Datatable extends JetView {
 			localId:"newUserForm",
 			cols:[
 				{ view:"text", localId:"inputValue"},
-				{ view: "button", name:"input", value:"Add new", css: "webix_primary", autowidth:true, click:() => this.addRow()},
+				{ view: "button", name:"input", value:"Add new", css: "webix_primary", autowidth:true, click:() => this._addRow()},
 			]
 		};
 
@@ -21,9 +21,10 @@ export default class Datatable extends JetView {
 			view: "datatable",
 			select:"row",
 			localId: "datatable",
+			autoConfig: true,
 			editable: true,
 			editaction: "dblclick",
-			columns: this.columns,
+			columns: this._columnsRender(),
 			on:{
 				onBeforeEditStop(values, editor){
 					const title = editor.getValue();
@@ -55,7 +56,7 @@ export default class Datatable extends JetView {
 		this.table.parse(this.data);
 	}
 
-	addRow(){
+	_addRow(){
 		const input = this.input;
 		const currentValue = input.getValue();
 		const table = this.table;
@@ -69,5 +70,20 @@ export default class Datatable extends JetView {
 			webix.message({type:"error", text: "Enter value"});
       
 		}
+	}
+
+	_columnsRender(){
+		const array = this.fields;
+		const closeButton = { template: "<span class='webix_icon wxi-trash deleteBtn'></span>", css:"deleteBtn" };
+
+		const columns = array.map((field, index, array) => {
+			if(index === array.length - 1){
+				return {id:`${field}`, header:`${field}`, editor:"text", fillspace:true};
+			}
+			return {id:`${field}`, header:`${field}`, editor:"text"};
+		});
+
+		columns.push(closeButton);
+		return columns;
 	}
 }

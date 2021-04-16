@@ -6,7 +6,7 @@ export default class SettingsView extends JetView{
 			padding:30,	rows:[
 				{
 					view: "segmented",
-					localId:"toggle",
+					localId:"Language",
 					inputWidth: 400,
 					height:50,
 					label:"English",
@@ -21,7 +21,7 @@ export default class SettingsView extends JetView{
 		};
 	}
 	changeLabelValue(){
-		const btn = this.$$("toggle");
+		const btn = this.$$("Language");
 		const btnId = btn.getValue();
 		const options = btn.getOption(btnId);
 		const btnValue = options.value;

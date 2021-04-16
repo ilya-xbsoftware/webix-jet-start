@@ -20,11 +20,10 @@ export default class ContactsView extends JetView {
 				{view: "text", label: "Name", name: "Name"},
 				{view: "text", label: "Email", name: "Email"},
 				{ cols:[
-					{view: "button", value: "clear", click: this.clearMessage, css: "webix_danger"},
+					{view: "button", value: "clear", click: () => this._clearMessage(), css: "webix_danger"},
 					{},
-					{view: "button", value: "save", click: this.successSave, css: "webix_primary"},
+					{view: "button", value: "save", click: () => this._successSave(), css: "webix_primary"},
 				]}
-				
 			]
 		};
 
@@ -36,13 +35,13 @@ export default class ContactsView extends JetView {
 		this.$$("contactForm").bind(this.$$("contactList"));
 	}
 
-	successSave(){
+	_successSave(){
 		webix.message({type:" success", text:"Form is save !"});
 	}
 
-	clearMessage(){
+	_clearMessage(){
 		webix.confirm({	text: "Do you want to clear the form?"}).then(() => {
-			this.$scope.$$("contactForm").clear();
+			this.$$("contactForm").clear();
 		});
 	}
   
