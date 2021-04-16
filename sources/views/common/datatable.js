@@ -13,7 +13,7 @@ export default class Datatable extends JetView {
 			localId:"newUserForm",
 			cols:[
 				{ view:"text", localId:"inputValue"},
-				{ view: "button", name:"input", value:"Add new", css: "webix_primary", autowidth:true, click:this.addRow},
+				{ view: "button", name:"input", value:"Add new", css: "webix_primary", autowidth:true, click:() => this.addRow()},
 			]
 		};
 
@@ -50,13 +50,15 @@ export default class Datatable extends JetView {
 	}
   
 	init(){
-		this.$$("datatable").parse(this.data);
+		this.table = this.$$("datatable");
+		this.input = this.$$("inputValue");
+		this.table.parse(this.data);
 	}
 
 	addRow(){
-		const input = this.$scope.$$("inputValue");
+		const input = this.input;
 		const currentValue = input.getValue();
-		const table = this.$scope.$$("datatable");
+		const table = this.table;
 		const tableCols = table.getColumns();
 		const newObj = {[tableCols[0].id]:currentValue};
 
