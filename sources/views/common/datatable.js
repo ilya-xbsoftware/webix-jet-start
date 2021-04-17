@@ -21,7 +21,6 @@ export default class Datatable extends JetView {
 			view: "datatable",
 			select:"row",
 			localId: "datatable",
-			autoConfig: true,
 			editable: true,
 			editaction: "dblclick",
 			columns: this._columnsRender(),
@@ -77,10 +76,7 @@ export default class Datatable extends JetView {
 		const closeButton = { template: "<span class='webix_icon wxi-trash deleteBtn'></span>", css:"deleteBtn" };
 
 		const columns = array.map((field, index, array) => {
-			if(index === array.length - 1){
-				return {id:`${field}`, header:`${field}`, editor:"text", fillspace:true};
-			}
-			return {id:`${field}`, header:`${field}`, editor:"text"};
+			return {id:`${field}`, header:`${field}`, editor:"text", fillspace:index === array.length - 1};
 		});
 
 		columns.push(closeButton);
