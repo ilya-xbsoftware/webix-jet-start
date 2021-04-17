@@ -8,7 +8,7 @@ export default class Datatable extends JetView {
 	}
 
 	config() {
-		const sortControler = {
+		const form = {
 			view:"form",
 			localId:"newUserForm",
 			cols:[
@@ -45,7 +45,7 @@ export default class Datatable extends JetView {
 		};
 
 		return {
-			rows:[ sortControler, dataTable ]
+			rows:[ form, dataTable ]
 		};
 	}
   
