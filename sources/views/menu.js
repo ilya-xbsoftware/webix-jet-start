@@ -2,6 +2,8 @@ import {JetView} from "webix-jet";
 
 export default class Menu extends JetView {
 	config(){
+    const _ = this.app.getService("locale")._;
+
 		return {
 			view:"menu",
 			id:"top:menu",
@@ -9,9 +11,9 @@ export default class Menu extends JetView {
 			layout:"y",
 			select:true,
 			data:[
-				{ id: "contacts", value: "Contacts", href: "#!/top/contacts" },
-				{ id: "data", value: "Data", href: "#!/top/data" },
-				{ id: "settings", value: "Settings", href: "#!/top/settings" }
+				{ id: "contacts", value: _("Contacts"), href: "#!/top/contacts/contactsForm?id=1" },
+				{ id: "data", value: _("Data"), href: "#!/top/data" },
+				{ id: "settings", value: _("Settings"), href: "#!/top/settings" }
 			]
 		};
 	}

@@ -1,48 +1,54 @@
 import {JetView} from "webix-jet";
-import { contacts } from "models/contacts";
+import { contactsCol } from "models/collections";
+import PopupView from "views/windows/popup";
 
 export default class ContactsView extends JetView {
 	config() {
+		const deleteBtn = "<span class='webix_icon wxi-close webix-denger listDeleteBtn''></span>";
+		const addNewRowBtn = {
+			view:"button",
+			label:"Add new",
+			css:"webix_primary",
+			click: () => this._jetPopup.showWindow(),
+		};
+
 		const list = {
 			view: "list",
 			localId: "contactList",
-			template: "Country: #Country# | Status: #Status# | Name: #Name# | Email: #Email#",
+			template: `#Name# ${deleteBtn}`,
 			select: true,
+			autoheight:true,
+			onClick:{
+				"listDeleteBtn": function(ev, id){
+					webix.confirm("Delete selected row?", "confirm-warning")
+						.then(() => {
+							this.remove(id);
+						}); 
+				}
+			}
 		};
 
-		const form = {
-			view: "form",
-			localId: "contactForm",
-			width:400,
-			elements: [
-				{view: "text", label: "Country", name: "Country"},
-				{view: "text", label: "Status", name: "Status"},
-				{view: "text", label: "Name", name: "Name"},
-				{view: "text", label: "Email", name: "Email"},
-				{ cols:[
-					{view: "button", value: "clear", click: () => this._clearMessage(), css: "webix_danger"},
-					{},
-					{view: "button", value: "save", click: () => this._successSave(), css: "webix_primary"},
-				]}
-			]
-		};
-
-		return { cols: [list, form]};
+		return { cols: [
+			{rows:[list, addNewRowBtn]},
+			{ $subview:true }
+		]};
 	}
 
 	init() {
-		this.$$("contactList").parse(contacts);
-		this.$$("contactForm").bind(this.$$("contactList"));
+		this.list = this.$$("contactList");
+		this.list.parse(contactsCol);
+		this._jetPopup = this.ui(PopupView);
+
 	}
 
-	_successSave(){
-		webix.message({type:" success", text:"Form is save !"});
-	}
-
-	_clearMessage(){
-		webix.confirm({	text: "Do you want to clear the form?"}).then(() => {
-			this.$$("contactForm").clear();
+	ready(){
+		this.on(this.list, "onAfterSelect", (id) =>{
+			this.show(`../contacts/contactsForm?id=${id}`);
 		});
 	}
   
+	urlChange(view, url){
+		const id = url[1].params.id;
+		this.list.select(id);
+	}
 }
