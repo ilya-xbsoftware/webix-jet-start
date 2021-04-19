@@ -37,7 +37,7 @@ export default class FormView extends JetView {
 			}
 		};
 	}
-
+	
 	init(){
 		this.form = this.$$("contactForm");
 	}

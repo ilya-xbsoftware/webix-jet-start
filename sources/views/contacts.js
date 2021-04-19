@@ -24,6 +24,7 @@ export default class ContactsView extends JetView {
 				"listDeleteBtn": (ev, id) => {
 					webix.confirm({ok:_("ok"), cancel:_("cancel"), text:_("DeleteRow")}, "confirm-warning")
 						.then(() => this._deleteItem(id)); 
+					return false;
 				}
 			}
 		};
@@ -60,9 +61,7 @@ export default class ContactsView extends JetView {
 			Country: "Some Country",
 			Status:  "Some Status",
 		};
-    
 		contacts.add(data);
-		this.list.select(data.id);
 	}
 
 	_deleteItem(id){
