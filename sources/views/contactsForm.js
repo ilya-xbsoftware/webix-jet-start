@@ -2,7 +2,7 @@ import {JetView} from "webix-jet";
 import { contacts } from "models/contacts";
 import { countries } from "models/countries";
 import { statuses } from "models/statuses";
-import { messages } from "locales/messages";
+import { messages } from "constants/messages";
 
 export default class FormView extends JetView {
 
