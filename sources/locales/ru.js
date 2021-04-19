@@ -1,5 +1,5 @@
 export default {
-	"Language:": "Язык:",
+	"Language": "Язык",
 	"English" : "Английский",
 	"Russian": "Русский",
 	"Contacts": "Контакты",

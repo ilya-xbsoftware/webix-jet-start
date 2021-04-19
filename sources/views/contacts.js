@@ -64,7 +64,6 @@ export default class ContactsView extends JetView {
 	}
 
 	_addUser(){
-		const list = this.list;
 		contactsCol.add({
 			Name: "Some Name",
 			Country: "Some Country",

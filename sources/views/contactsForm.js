@@ -52,7 +52,6 @@ export default class FormView extends JetView {
 			webix.message({type:"success", text:"Form is save !"});
 		}else{
 			webix.message({type:"error", text:"Errors in the form !"});
-			return false;
 		}
 	}
 
