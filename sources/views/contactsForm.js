@@ -47,6 +47,8 @@ export default class FormView extends JetView {
 		const id = this.getParam("id");
 		if(contacts.getItem(id)){
 			this.form.parse(contacts.getItem(id));
+		}else{
+			this.form.clear();
 		}
 	}
 
