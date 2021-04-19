@@ -43,8 +43,11 @@ export default class FormView extends JetView {
 	}
 
 	urlChange(){
-		const id = this.getParam("id");
-		if(contacts.getItem(id)){
+		const firstId = contacts.getFirstId();
+		const id = this.getParam("id") || firstId;
+		const currentId = contacts.getItem(id);
+
+		if(currentId){
 			this.form.parse(contacts.getItem(id));
 		}else{
 			this.form.clear();
@@ -54,10 +57,12 @@ export default class FormView extends JetView {
 	_successSave(){
 		const values = this.form.getValues();
 		const valid = this.form.validate();
+		const selectedId = values.id;
+
 		const _ = this.app.getService("locale")._;
 
 		if(valid){
-			contacts.parse(values);
+			contacts.updateItem(selectedId, values);
 			webix.message({type:"success", text:_("saveFrom")});
 		}else{
 			webix.message({type:"error", text:_("errorForm")});

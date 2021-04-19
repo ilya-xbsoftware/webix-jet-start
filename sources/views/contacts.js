@@ -23,9 +23,7 @@ export default class ContactsView extends JetView {
 			onClick:{
 				"listDeleteBtn": (ev, id) => {
 					webix.confirm({ok:_("ok"), cancel:_("cancel"), text:_("DeleteRow")}, "confirm-warning")
-						.then(() => {
-							this.list.remove(id);
-						}); 
+						.then(() => this._deleteItem(id)); 
 				}
 			}
 		};
@@ -39,41 +37,36 @@ export default class ContactsView extends JetView {
 	init() {
 		this.list = this.$$("contactList");
 		this.list.parse(contacts);
-	}
 
-	ready(){
 		this.on(this.list, "onAfterSelect", (id) =>{
 			this.show(`../contacts?id=${id}`);
-		});
-
-		this.on(this.list, "onAfterDelete", (deletedId) =>{
-			const firstListId = this.list.getFirstId();
-      
-			contacts.remove(deletedId);
-
-			if(firstListId){
-				this.show(`../contacts?id=${firstListId}`);
-			}else{
-				this.show("../contacts");
-			}
-		
 		});
 	}
 
 	urlChange(view, url){
 		const id = url[0].params.id;
+		const firstId = contacts.getFirstId();
+    
 		if(id && contacts.exists(id)){
 			this.list.select(id);
 		}else{
-			this.setParam("id", 1, true);
+			this.list.select(firstId);
 		}
 	}
 
 	_addUser(){
-		contacts.add({
+		const data = {
 			Name: "Some Name",
 			Country: "Some Country",
 			Status:  "Some Status",
-		});
+		};
+    
+		contacts.add(data);
+		this.list.select(data.id);
+	}
+
+	_deleteItem(id){
+		contacts.remove(id);
+		this.show("../contacts");
 	}
 }

@@ -58,6 +58,7 @@ export default class Datatable extends JetView {
 	}
 
 	_addRow(){
+		const _ = this.app.getService("locale")._;
 		const input = this.input;
 		const currentValue = input.getValue();
 		const table = this.table;

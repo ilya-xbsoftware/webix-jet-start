@@ -26,7 +26,7 @@ export default {
 	"fieldError": "This field is required",
 	"mailError": "Wrong mail format",
 
-  "saveFrom": "Form is save !",
-  "errorForm": "Errors in the form !!",
+	"saveFrom": "Form is save !",
+	"errorForm": "Errors in the form !!",
 
 };
