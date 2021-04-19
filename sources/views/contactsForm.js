@@ -48,7 +48,7 @@ export default class FormView extends JetView {
 		const valid = this.form.validate();
 
 		if(valid){
-			contactsCol.add(values);
+			contactsCol.parse(values);
 			webix.message({type:"success", text:"Form is save !"});
 		}else{
 			webix.message({type:"error", text:"Errors in the form !"});

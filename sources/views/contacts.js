@@ -1,6 +1,5 @@
 import {JetView} from "webix-jet";
 import { contactsCol } from "models/collections";
-import PopupView from "views/windows/popup";
 
 export default class ContactsView extends JetView {
 	config() {
@@ -9,12 +8,7 @@ export default class ContactsView extends JetView {
 			view:"button",
 			label:"Add new",
 			css:"webix_primary",
-			click: () => {
-				if(!this._jetPopup){
-					this._jetPopup = this.ui(PopupView);
-				}
-				this._jetPopup.showWindow();
-			},
+			click: () => this._addUser(),
 		};
 
 		const list = {
@@ -27,7 +21,6 @@ export default class ContactsView extends JetView {
 				"listDeleteBtn": (ev, id) => {
 					webix.confirm("Delete selected row?", "confirm-warning")
 						.then(() => {
-							console.log(id);
 							this.list.remove(id);
 						}); 
 				}
@@ -68,5 +61,14 @@ export default class ContactsView extends JetView {
 	urlChange(view, url){
 		const id = url[1].params.id;
 		this.list.select(id);
+	}
+
+	_addUser(){
+		const list = this.list;
+		contactsCol.add({
+			Name: "Some Name",
+			Country: "Some Country",
+			Status:  "Some Status",
+		});
 	}
 }

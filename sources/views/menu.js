@@ -11,9 +11,9 @@ export default class Menu extends JetView {
 			layout:"y",
 			select:true,
 			data:[
-				{ id: "contacts", value: _("Contacts"), href: "#!/top/contacts/contactsForm?id=1" },
-				{ id: "data", value: _("Data"), href: "#!/top/data" },
-				{ id: "settings", value: _("Settings"), href: "#!/top/settings" }
+				{ id: "contacts", value: _("Contacts"),  icon: "wxi-drag", href: "#!/top/contacts/contactsForm?id=1" },
+				{ id: "data", value: _("Data"), icon: "wxi-file", href:"#!/top/data" },
+				{ id: "settings", value: _("Settings"), icon: "wxi-user", href: "#!/top/settings" }
 			]
 		};
 	}
