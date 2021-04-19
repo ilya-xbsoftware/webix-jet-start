@@ -5,9 +5,6 @@ export default {
 	"Contacts": "Контакты",
 	"Data": "Таблица",
 	"Settings": "Настройки",
-	"The field must not be empty": "Поле не должно быть пустым",
-	"This field is required": "Обязательное к заполнению поле",
-	"Wrong mail format": "Неверный формат электронной почты",
 	"Country": "Страна",
 	"Status": "Статус",
 	"Name": "Имя",
@@ -24,4 +21,11 @@ export default {
 	"Icon":"Иконка",
 	"Countries":"Страны",
 	"Statuses":"Статусы",
+
+	"emptyError":"Поле не должно быть пустым",
+	"fieldError": "Обязательное к заполнению поле",
+	"mailError": "Неверный формат электронной почты",
+
+	"saveFrom": "Форма сохранена",
+	"errorForm": "Ошибки в форме",
 };

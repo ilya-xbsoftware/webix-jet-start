@@ -69,7 +69,6 @@ export default class ContactsView extends JetView {
 		}
 	}
 
-	
 	_addUser(){
 		contacts.add({
 			Name: "Some Name",

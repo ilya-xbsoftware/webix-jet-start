@@ -5,9 +5,6 @@ export default {
 	"Contacts": "Contacts",
 	"Data": "Data",
 	"Settings": "Settings",
-	"The field must not be empty": "The field must not be empty",
-	"This field is required": "This field is required",
-	"Wrong mail format": "Wrong mail format",
 	"Country": "Country",
 	"Status": "Status",
 	"Name": "Name",
@@ -24,4 +21,12 @@ export default {
 	"Icon":"Icon",
 	"Countries":"Countries",
 	"Statuses":"Statuses",
+
+	"emptyError":"The field must not be empty",
+	"fieldError": "This field is required",
+	"mailError": "Wrong mail format",
+
+  "saveFrom": "Form is save !",
+  "errorForm": "Errors in the form !!",
+
 };
