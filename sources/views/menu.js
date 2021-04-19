@@ -2,7 +2,7 @@ import {JetView} from "webix-jet";
 
 export default class Menu extends JetView {
 	config(){
-    const _ = this.app.getService("locale")._;
+		const _ = this.app.getService("locale")._;
 
 		return {
 			view:"menu",

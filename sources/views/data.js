@@ -1,18 +1,17 @@
 import {JetView} from "webix-jet";
-import {statuses} from "models/statuses";
-import {countries} from "models/countries";
+import {countriesCol, statusesCol } from "models/collections";
 import Datatable from "views/common/datatable.js";
 
 export default class ContactsView extends JetView {
 	config() {
 		const countriesTable = {
 			localId:"countriesTable",
-			cols: [ new Datatable(this.app, "", countries, ["Name"])]
+			cols: [ new Datatable(this.app, "", countriesCol, ["Name"])]
 		};
 
 		const statusesTable = {
 			localId:"statusesTable",
-			cols: [ new Datatable(this.app, "", statuses, ["Name", "Icon"])]
+			cols: [ new Datatable(this.app, "", statusesCol, ["Name", "Icon"])]
 		};
 
 		return{
