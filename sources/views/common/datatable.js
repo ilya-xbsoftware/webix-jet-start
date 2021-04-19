@@ -8,12 +8,14 @@ export default class Datatable extends JetView {
 	}
 
 	config() {
+		const _ = this.app.getService("locale")._;
+    
 		const form = {
 			view:"form",
 			localId:"newUserForm",
 			cols:[
 				{ view:"text", localId:"inputValue"},
-				{ view: "button", name:"input", value:"Add new", css: "webix_primary", autowidth:true, click:() => this._addRow()},
+				{ view: "button", name:"input", value:_("Add new"), css: "webix_primary", autowidth:true, click:() => this._addRow()},
 			]
 		};
 
@@ -28,14 +30,14 @@ export default class Datatable extends JetView {
 				onBeforeEditStop(values, editor){
 					const title = editor.getValue();
 					if(!title){
-						webix.message({type:"error", text:"Row can't be empty"});
+						webix.message({type:"error", text:_("clearRow")});
 						return false;
 					}
 				},
 			},
 			onClick:{
 				"deleteBtn": function (e, id) {
-					webix.confirm("Delete selected row?", "confirm-warning")
+					webix.confirm({ok:_("ok"), cancel:_("cancel"), text:_("DeleteRow")}, "confirm-warning")
 						.then(() => {
 							this.remove(id);
 						});
@@ -66,17 +68,18 @@ export default class Datatable extends JetView {
 			table.add(newObj);
 			input.setValue("");
 		}else{
-			webix.message({type:"error", text: "Enter value"});
-      
+			webix.message({type:"error", text: _("Enter value")});
 		}
 	}
 
 	_columnsRender(){
+		const _ = this.app.getService("locale")._;
 		const array = this.fields;
 		const closeButton = { template: "<span class='webix_icon wxi-trash deleteBtn'></span>", css:"deleteBtn" };
 
 		const columns = array.map((field, index, array) => {
-			return {id:`${field}`, header:`${field}`, editor:"text", fillspace:index === array.length - 1};
+			const headerText = _(`${field}`); 
+			return {id:`${field}`, header:`${headerText}`, editor:"text", fillspace:index === array.length - 1};
 		});
 
 		columns.push(closeButton);
