@@ -45,14 +45,10 @@ export default class ContactsView extends JetView {
 	}
 
 	urlChange(){
-		const firstId = contacts.getFirstId();
-		const id = this.getParam("id");
+		const id = this.getParam("id") || contacts.getFirstId();
 		
-
 		if(id && contacts.exists(id)){
 			this.list.select(id);
-		}else if(firstId && this.list.exists(firstId)){
-			this.list.select(firstId);
 		}else{
 			this.show("../contacts");
 		}
