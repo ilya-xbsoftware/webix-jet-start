@@ -1,48 +1,74 @@
 import {JetView} from "webix-jet";
+import FormView from "views/contactsForm";
 import { contacts } from "models/contacts";
 
 export default class ContactsView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
+		const deleteBtn = "<span class='webix_icon wxi-close webix-denger listDeleteBtn''></span>";
+		
+		const addNewRowBtn = {
+			view:"button",
+			label:_("Add new"),
+			css:"webix_primary",
+			click: () => this._addUser(),
+		};
+
 		const list = {
 			view: "list",
 			localId: "contactList",
-			template: "Country: #Country# | Status: #Status# | Name: #Name# | Email: #Email#",
+			template: `#Name# ${deleteBtn}`,
 			select: true,
+			onClick:{
+				"listDeleteBtn": (ev, id) => {
+					webix.confirm({ok:_("ok"), cancel:_("cancel"), text:_("DeleteRow")}, "confirm-warning")
+						.then(() => this._deleteItem(id)); 
+					return false;
+				}
+			}
 		};
 
-		const form = {
-			view: "form",
-			localId: "contactForm",
-			width:400,
-			elements: [
-				{view: "text", label: "Country", name: "Country"},
-				{view: "text", label: "Status", name: "Status"},
-				{view: "text", label: "Name", name: "Name"},
-				{view: "text", label: "Email", name: "Email"},
-				{ cols:[
-					{view: "button", value: "clear", click: () => this._clearMessage(), css: "webix_danger"},
-					{},
-					{view: "button", value: "save", click: () => this._successSave(), css: "webix_primary"},
-				]}
-			]
-		};
-
-		return { cols: [list, form]};
+		return { cols: [
+			{rows:[list, addNewRowBtn]},
+			{ $subview:FormView }
+		]};
 	}
 
 	init() {
-		this.$$("contactList").parse(contacts);
-		this.$$("contactForm").bind(this.$$("contactList"));
-	}
+		this.list = this.$$("contactList");
+		this.list.parse(contacts);
 
-	_successSave(){
-		webix.message({type:" success", text:"Form is save !"});
-	}
-
-	_clearMessage(){
-		webix.confirm({	text: "Do you want to clear the form?"}).then(() => {
-			this.$$("contactForm").clear();
+		this.on(this.list, "onAfterSelect", (id) =>{
+			this.show(`../contacts?id=${id}`);
 		});
 	}
-  
+
+	urlChange(){
+		const id = this.getParam("id") || contacts.getFirstId();
+		
+		if(id && contacts.exists(id)){
+			this.list.select(id);
+		}else{
+			this.show("../contacts");
+		}
+	}
+
+	_addUser(){
+		const data = {
+			Name: "Some Name",
+			Country: "Some Country",
+			Status:  "Some Status",
+		};
+
+		contacts.add(data);
+		this.list.select(data.id);
+	}
+
+	_deleteItem(id){
+		const selectedId = this.list.getSelectedId();
+		contacts.remove(id);
+		if (selectedId === id){
+			this.show("../contacts");
+		}	
+	}
 }

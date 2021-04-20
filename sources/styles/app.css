@@ -65,3 +65,9 @@
 .deleteBtn {
   cursor: pointer;
 }
+
+.listDeleteBtn {
+  float: right;
+  cursor: pointer;
+  color: #e65345;
+}
