@@ -19,7 +19,6 @@ export default class ContactsView extends JetView {
 			localId: "contactList",
 			template: `#Name# ${deleteBtn}`,
 			select: true,
-			autoheight:true,
 			onClick:{
 				"listDeleteBtn": (ev, id) => {
 					webix.confirm({ok:_("ok"), cancel:_("cancel"), text:_("DeleteRow")}, "confirm-warning")
