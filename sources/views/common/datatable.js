@@ -58,11 +58,10 @@ export default class Datatable extends JetView {
 	_addRow(){
 		const _ = this.app.getService("locale")._;
 		const currentValue = this.input.getValue();
-		const newObj = {Name:currentValue};
 
 		if(currentValue){
 			this.data.waitSave(() => {
-				this.data.add(newObj);
+				this.data.add({Name:currentValue});
 				this.input.setValue("");
 			});
 		}else{

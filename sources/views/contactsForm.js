@@ -50,10 +50,10 @@ export default class FormView extends JetView {
 		]).then(()=>{
 			const firstId = contacts.getFirstId();
 			const id = this.getParam("id") || firstId;
-			const currentId = contacts.getItem(id);
+			const contact = contacts.getItem(id);
 
-			if(currentId){
-				this.form.parse(currentId);
+			if(contact){
+				this.form.parse(contact);
 			}else{
 				this.form.clear();
 			}
