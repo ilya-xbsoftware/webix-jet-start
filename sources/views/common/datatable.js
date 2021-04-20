@@ -57,14 +57,13 @@ export default class Datatable extends JetView {
 
 	_addRow(){
 		const _ = this.app.getService("locale")._;
-		const input = this.input;
-		const currentValue = input.getValue();
+		const currentValue = this.input.getValue();
 		const newObj = {Name:currentValue};
 
 		if(currentValue){
 			this.data.waitSave(() => {
 				this.data.add(newObj);
-				input.setValue("");
+				this.input.setValue("");
 			});
 		}else{
 			webix.message({type:"error", text: _("Enter value")});
