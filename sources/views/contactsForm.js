@@ -43,15 +43,21 @@ export default class FormView extends JetView {
 	}
 
 	urlChange(){
-		const firstId = contacts.getFirstId();
-		const id = this.getParam("id") || firstId;
-		const currentId = contacts.getItem(id);
+		webix.promise.all([
+			contacts.waitData,
+			countries.waitData,
+			statuses.waitData
+		]).then(()=>{
+			const firstId = contacts.getFirstId();
+			const id = this.getParam("id") || firstId;
+			const currentId = contacts.getItem(id);
 
-		if(currentId){
-			this.form.parse(currentId);
-		}else{
-			this.form.clear();
-		}
+			if(currentId){
+				this.form.parse(currentId);
+			}else{
+				this.form.clear();
+			}
+		});
 	}
 
 	_successSave(){
