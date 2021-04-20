@@ -44,14 +44,14 @@ export default class ContactsView extends JetView {
 		});
 	}
 
-	urlChange(view, url){
-		const id = url[0].params.id;
+	urlChange(){
 		const firstId = contacts.getFirstId();
-		const listСheck = !!this.list.count();
-    
+		const id = this.getParam("id");
+		
+
 		if(id && contacts.exists(id)){
 			this.list.select(id);
-		}else if(listСheck){
+		}else if(firstId && this.list.exists(firstId)){
 			this.list.select(firstId);
 		}else{
 			this.show("../contacts");
@@ -64,11 +64,16 @@ export default class ContactsView extends JetView {
 			Country: "Some Country",
 			Status:  "Some Status",
 		};
+
 		contacts.add(data);
+		this.list.select(data.id);
 	}
 
 	_deleteItem(id){
+		const selectedId = this.list.getSelectedId();
 		contacts.remove(id);
-		this.show("../contacts");
+		if (selectedId === id){
+			this.show("../contacts");
+		}	
 	}
 }
