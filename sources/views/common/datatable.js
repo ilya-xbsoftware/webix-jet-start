@@ -62,8 +62,7 @@ export default class Datatable extends JetView {
 		if(inputValue){
 			this.data.waitSave(() => {
 				this.data.add({Name:inputValue});
-				this.input.setValue("");
-			});
+			}).then(() => this.input.setValue(""));
 		}else{
 			webix.message({type:"error", text: _("Enter value")});
 		}
