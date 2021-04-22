@@ -44,30 +44,36 @@ export default class ContactsView extends JetView {
 	}
 
 	urlChange(){
-		const id = this.getParam("id") || contacts.getFirstId();
+		contacts.waitData.then(() => {
+			const id = this.getParam("id") || contacts.getFirstId();
 		
-		if(id && contacts.exists(id)){
-			this.list.select(id);
-		}else{
-			this.show("../contacts");
-		}
+			if(id && contacts.exists(id)){
+				this.list.select(id);
+			}else{
+				this.show("../contacts");
+			}
+		});
 	}
 
 	_addUser(){
-		const data = {
+		const newContact = {
 			Name: "Some Name",
 			Country: "Some Country",
 			Status:  "Some Status",
 		};
 
-		contacts.add(data);
-		this.list.select(data.id);
+		contacts.waitSave(() => {
+			contacts.add(newContact);
+		}).then((objectWithId) =>{
+			this.list.select(objectWithId.id);
+		});
 	}
 
 	_deleteItem(id){
 		const selectedId = this.list.getSelectedId();
 		contacts.remove(id);
 		if (selectedId === id){
+      
 			this.show("../contacts");
 		}	
 	}

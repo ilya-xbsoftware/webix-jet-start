@@ -36,11 +36,9 @@ export default class Datatable extends JetView {
 				},
 			},
 			onClick:{
-				"deleteBtn": function (e, id) {
+				"deleteBtn": (e, id) => {
 					webix.confirm({ok:_("ok"), cancel:_("cancel"), text:_("DeleteRow")}, "confirm-warning")
-						.then(() => {
-							this.remove(id);
-						});
+						.then(() => this._deleteRow(id));
 					return false;
 				}
 			},
@@ -54,22 +52,25 @@ export default class Datatable extends JetView {
 	init(){
 		this.table = this.$$("datatable");
 		this.input = this.$$("inputValue");
-		this.table.parse(this.data);
+		this.table.sync(this.data);
 	}
 
 	_addRow(){
 		const _ = this.app.getService("locale")._;
-		const input = this.input;
-		const currentValue = input.getValue();
-		const table = this.table;
-		const tableCols = table.getColumns();
-		const newObj = {[tableCols[0].id]:currentValue};
+		const inputValue = this.input.getValue();
 
-		if(currentValue){
-			table.add(newObj);
-			input.setValue("");
+		if(inputValue){
+			this.data.waitSave(() => {
+				this.data.add({Name:inputValue});
+			}).then(() => this.input.setValue(""));
 		}else{
 			webix.message({type:"error", text: _("Enter value")});
+		}
+	}
+
+	_deleteRow(id){
+		if(id){
+			this.data.remove(id);
 		}
 	}
 
